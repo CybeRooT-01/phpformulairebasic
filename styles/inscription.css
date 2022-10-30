@@ -1,0 +1,136 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+.page-login {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+img {
+  width: 30px;
+  height: 30px;
+}
+.section-left {
+  text-align: center;
+  display: block;
+  height: 100vh;
+  background: black;
+}
+h3 {
+  font-size: 60px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 75px;
+  text-align: center;
+  color: white;
+  padding-top: 7rem;
+}
+.text-para {
+  font-style: normal;
+  font-weight: 500;
+  font-weight: normal;
+  font-size: 20px;
+  text-align: center;
+  color: white;
+  line-height: 28px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.btn-sing {
+  background: white;
+  color: black;
+  width: 280px;
+  height: 60px;
+  border: 1px solid white;
+  box-sizing: border-box;
+  border-radius: 30px;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  outline: none;
+  cursor: pointer;
+  line-height: 24px;
+}
+.section-right {
+  text-align: center;
+  padding-top: 5rem;
+}
+h4 {
+  font-weight: normal;
+  font-style: normal;
+  font-size: 64px;
+  font-weight: bold;
+  color: black;
+  line-height: 75px;
+}
+.reseaux-sociaux {
+  padding-top: 1.5rem;
+  padding-bottom: 2.1rem;
+}
+input[type="text"],
+input[type="password"]{
+  outline: none;
+  border-color: black;
+  border-width: 1.6px;
+  border-radius: 25px;
+  color: black;
+  width: 220px;
+  height: 45px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+}
+.input-group {
+  margin-bottom: 1rem;
+}
+.input-group span {
+  display: inline-block;
+  padding: 0rem 1rem;
+  font-size: 1.5rem;
+}
+.btn-connexion {
+  background: black;
+  color: white;
+  width: 130px;
+  height: 40px;
+  border: 1px solid white;
+  box-sizing: border-box;
+  border-radius: 30px;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  outline: none;
+  cursor: pointer;
+  line-height: 24px;
+}
+@media only screen and (max-width: 768px) {
+  .page-login {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.section-right {
+  padding-top: 1rem;
+}
+
+.text-para {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+@media only screen and (max-width: 650px) {
+  .page-login {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.section-right {
+  padding-top: 1rem;
+}
+
+.text-para {
+  padding-top: 0;
+  padding-bottom: 0;
+}
