@@ -1,0 +1,4 @@
+#don't push these files
+upload.php
+#don't push these folders
+/uploads

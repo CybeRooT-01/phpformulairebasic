@@ -1,4 +1,5 @@
-* {
+
+*{
   margin: 0;
   padding: 0;
   color: white;
@@ -17,7 +18,7 @@ img {
   text-align: center;
   display: block;
   height: 100vh;
-  background: black;
+  background: red;
 }
 h3 {
   font-size: 60px;
@@ -71,7 +72,7 @@ h4 {
   padding-bottom: 2.1rem;
 }
 input[type="text"],
-input[type="password"]{
+input[type="password"] {
   outline: none;
   border-color: black;
   border-width: 1.6px;

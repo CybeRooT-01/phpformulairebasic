@@ -5,7 +5,7 @@ if (isset($_SESSION["user"])) {
     header("Location: profil.php");
     exit;
 }
-
+$_SESSION["error"] = [];
 //on verfie si le formulaire a été envoyé
 if (!empty($_POST)) {
     //on sait que le formulaire a ete envoyé
@@ -15,40 +15,43 @@ if (!empty($_POST)) {
         !empty($_POST["email"]) && !empty($_POST["pass"])
     ) {
         //ici le formulaire est pret a étre traité
+       
+            //on verifie si l'email est correcte
+            if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+                $_SESSION["error"][] = "l'adress email est incorrecte";
+            }
 
-        //on verifie si l'email est correcte
-        if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-            die("l'adress email est incorrecte");
-        }
+            //verify if the email exist in our database
 
-        //verify if the email exist in our database
+            require_once("include/db_connect.php");
 
-        require_once("include/db_connect.php");
-
-        $sql = "SELECT * FROM users WHERE email =:email";
-        $requete = $db->prepare($sql);
-        $requete->bindValue(":email", $_POST["email"], PDO::PARAM_STR);
-        $requete->execute();
-        $user = $requete->fetch();
-        if (!$user) {
-            //l'utilisateur n'existe pas dans la bd
-            die("le user et/ou le mot de passe est incorrect");
-        }
-        //here w've a user we can verify his passwd
-        if (!password_verify($_POST["pass"], $user["pass"])) {
-            //le mot de passe est incorrect
-            die("le user et/ou le mot de passe est incorrect");
-        }
+            $sql = "SELECT * FROM users WHERE email =:email";
+            $requete = $db->prepare($sql);
+            $requete->bindValue(":email", $_POST["email"], PDO::PARAM_STR);
+            $requete->execute();
+            $user = $requete->fetch();
+            if (!$user) {
+                //l'utilisateur n'existe pas dans la bd
+                $_SESSION["error"][] = "le user et/ou le mot de passe est incorrect";
+            }
+            //here w've a user we can verify his passwd
+            if (!password_verify($_POST["pass"], $user["pass"])) {
+                //le mot de passe est incorrect
+                $_SESSION["error"][] = "le user et/ou le mot de passe est incorrect";
+            }
         //now the email and the passwd is OK we can open the session
-        $_SESSION["user"] = [
-            "id" => $user["id"],
-            "nom" => $user["nom"],
-            "email" => $user["email"],
-        ];
-        //on redirige vers la page profil
-        header("Location: profil.php");
+        if ($_SESSION["error"] === []
+        ) {
+            $_SESSION["user"] = [
+                "id" => $user["id"],
+                "nom" => $user["nom"],
+                "email" => $user["email"],
+            ];
+            //on redirige vers la page profil
+            header("Location: profil.php");
+        }
     } else {
-        die("Le formulaire n'est pas complet");
+        $_SESSION["error"][] = "Le formulaire n'est pas complet";
     }
 }
 ?>
@@ -60,6 +63,31 @@ if (!empty($_POST)) {
     <link rel="stylesheet" href="styles/connexion.css" />
     <meta name="viewport" content="width=device-width, initial-scale=">
     <title> Connexion</title>
+    <style>
+    .error {
+        font-size: 1.5em;
+        animation-duration: 10s;
+        animation-name: slide;
+        opacity: 0;
+        background-color: red;
+        width: 100%;
+        color: white;
+    }
+
+    @keyframes slide {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.5;
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+    </style>
 </head>
 
 <body>
@@ -80,8 +108,18 @@ if (!empty($_POST)) {
                 </a>
             </div>
             <button type="submit" class="btn">Se connecter</button>
-        </form>
 
+        </form>
+        <?php
+        if (isset($_SESSION["error"])) {
+            foreach ($_SESSION["error"] as $message) {
+        ?>
+        <p class="error"><?= $message ?></p>
+        <?php
+            }
+            unset($_SESSION["error"]);
+        }
+        ?>
     </div>
 </body>
 
